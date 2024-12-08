@@ -1,7 +1,11 @@
 from typing import Union
 
 
-def calculate_tax(price: Union[float, int], tax_rate: float, discount: float = 0, rounded: int = 2) -> float:
+def calculate_tax(
+        price: Union[float, int],
+        tax_rate: float,
+        discount: float = 0,
+        round_digits: int = 2) -> float:
     """ Эта функция рассчитывает стоимость товара с учётом указанного налога """
 
     if tax_rate < 0:
@@ -19,9 +23,9 @@ def calculate_tax(price: Union[float, int], tax_rate: float, discount: float = 0
     elif discount > 0:
         tax_price = price + (price / 100 * tax_rate)
         discount_price = tax_price - (tax_price / 100 * discount)
-        return round(discount_price, rounded)
+        return round(discount_price, round_digits)
 
     else:
         tax_price = price + (price / 100 * tax_rate)
 
-    return round(tax_price, rounded)
+    return round(tax_price, round_digits)
