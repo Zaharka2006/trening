@@ -3,13 +3,13 @@ import pytest
 from src.taxes import calculate_tax
 
 
-@pytest.mark.parametrize('price, tax_rate, discount, expected', [
-    (100, 10, 20, 88),
-    (200, 20, 30, 168),
-    (300, 30, 40, 234)
+@pytest.mark.parametrize('price, tax_rate, discount, expected, rounded', [
+    (100.5, 10, 20, 88.4, 1),
+    (207.7, 20, 30, 174.47, 2),
+    (321.65, 30, 40, 251, 0)
 ])
-def test_calculate_tax_with_discount(price, tax_rate, discount, expected):
-    assert calculate_tax(price, tax_rate, discount) == expected
+def test_calculate_tax_with_discount(price, tax_rate, discount, rounded, expected):
+    assert calculate_tax(price, tax_rate, discount, rounded) == expected
 
 
 def test_calculate_tax_without_discount():
@@ -19,6 +19,10 @@ def test_calculate_tax_without_discount():
 def test_calculate_tax_invalid_prices():
     with pytest.raises(ValueError):
         calculate_tax(price=-20, tax_rate=10)
+
+
+def test_calculate_tax_without_rounded():
+    assert calculate_tax(price=57.98, tax_rate=15, discount=32) == 45.34
 
 
 def test_calculate_tax_invalid_discount():
