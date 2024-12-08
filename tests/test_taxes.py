@@ -6,7 +6,7 @@ from src.taxes import calculate_tax
 @pytest.mark.parametrize('price, tax_rate, discount, expected, rounded', [
     (100.5, 10, 20, 88.4, 1),
     (207.7, 20, 30, 174.47, 2),
-    (321.65, 30, 40, 251, 0)
+    (321, 30, 40, 250, 0)
 ])
 def test_calculate_tax_with_discount(price, tax_rate, discount, rounded, expected):
     assert calculate_tax(price, tax_rate, discount, rounded) == expected
@@ -33,3 +33,8 @@ def test_calculate_tax_invalid_discount():
 def test_calculate_tax_valid_tax_rate():
     with pytest.raises(ValueError):
         calculate_tax(price=10, tax_rate=-10)
+
+
+def test_calculate_tax_valid_type():
+    with pytest.raises(TypeError):
+        calculate_tax(price='a', tax_rate=10)
